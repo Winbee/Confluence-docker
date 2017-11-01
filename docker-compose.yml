@@ -1,0 +1,25 @@
+version: '2'
+services:
+
+  confluence-app:
+      image: blacklabelops/confluence
+      ports:
+          - 18080:8090
+          - 18081:8091
+
+  confluence-mysql:
+      image: mysql/mysql-server:5.7
+      environment:
+            - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+            - MYSQL_DATABASE=confluencedb
+            - MYSQL_USER=changeMeUser
+            - MYSQL_PASSWORD=changeMePassword
+      ports:
+          - 3307:3306
+      volumes:
+          - confluence-mysql-data:/var/lib/mysql
+          - ./config/my.cnf:/etc/my.cnf
+
+volumes:
+
+  confluence-mysql-data:
